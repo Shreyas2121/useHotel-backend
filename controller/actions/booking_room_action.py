@@ -55,7 +55,7 @@ def check_booking():
         if not i in booking_data:
             booking_data.append(i)
 
-    res = requests.get('http://127.0.0.1:5000/booking/room/getDetails')
+    res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/room/getDetails')
 
     available_rooms = {}
     for each in res.json().get('rooms'):

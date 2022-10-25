@@ -44,7 +44,7 @@ def check_bookings():
 
     booking_data=booking_data1+booking_data2
 
-    res = requests.get('http://127.0.0.1:5000/booking/hall/getDetails')
+    res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/hall/getDetails')
 
     available_halls = {}
     for each in res.json().get('halls'):
