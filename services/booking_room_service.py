@@ -5,10 +5,10 @@ from datetime import datetime
 from dateutil import parser
 import requests
 
-from models.booking_room import BookingRoom
+from models.BookingRoom import BookingRoom
 
 
-def book_room():
+def service_book_room():
     data: Any = request.get_json()
     print(data)
 
@@ -34,12 +34,12 @@ def book_room():
 
     return jsonify({"message": "Booking Successful",})
 
-def get_bookings():
+def service_get_bookings():
     bookings = BookingRoom.objects()
     return list(map(lambda x: x.to_json(), bookings))
 
 
-def check_booking():
+def service_check_booking():
     data: Any = request.get_json()
     checkin = data['checkIn']
     checkout = data['checkOut']

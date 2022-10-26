@@ -4,9 +4,9 @@ from flask import jsonify, request
 from dateutil import parser
 import requests
 
-from models.booking_hall import BookingHall
+from models.BookingHall import BookingHall
 
-def book_hall():
+def service_book_hall():
     data : Any = request.get_json()
     BookingHall(
         booking_username = data['name'],
@@ -30,7 +30,7 @@ def book_hall():
 #     bookings = BookingHall.objects(booking_check_in=parsed_check_in)
 #     return list(map(lambda x: x.booking_hall_type, bookings))
 
-def check_bookings():
+def service_check_bookings():
     data: Any = request.get_json()
     checkin = data['checkIn']
     checkout = data['checkOut']

@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
-from controller.routes.halls_route import halls_route
-from controller.routes.rooms_route import rooms_route
-from controller.routes.coupon_route import coupons_route
-from controller.routes.addons_route import addons_route
-from controller.routes.booking_room_route import booking_route
-from controller.routes.booking_hall_route import booking_hall_route
-from controller.routes.reviews_route import reviews_route
-from controller.routes.cancelling_room__route import cancel_room_route
-from controller.routes.cancelling_hall_route import cancel_hall_route
+from routes.halls_route import halls_route
+from routes.rooms_route import rooms_route
+from routes.coupon_route import coupons_route
+from routes.addons_route import addons_route
+from routes.booking_room_route import booking_route
+from routes.booking_hall_route import booking_hall_route
+from routes.reviews_route import reviews_route
+from routes.cancelling_room_route import cancel_room_route
+from routes.cancelling_hall_route import cancel_hall_route
 
 application = Flask(__name__)
 CORS(application)

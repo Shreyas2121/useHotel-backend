@@ -1,7 +1,7 @@
 from flask import jsonify
-from models.hall import Hall
+from models.Hall import Hall
 
-def create_hall():
+def service_create_hall():
     hall = Hall(
         hall_id = 3,
         hall_type = "Birthday Party",
@@ -17,6 +17,6 @@ def create_hall():
     return jsonify({'hall': hall.to_json()})
 
 
-def get_halls():
+def service_get_halls():
     halls = Hall.objects()
     return jsonify({'halls': [hall.to_json() for hall in halls]})

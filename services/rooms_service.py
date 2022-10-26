@@ -1,7 +1,7 @@
 from flask import jsonify
-from models.room import Room
+from models.Room import Room
 
 
-def get_rooms_list():
+def service_get_rooms_list():
     rooms = Room.objects()  # type: ignore
     return jsonify({'rooms': [room.to_json() for room in rooms]})

@@ -3,11 +3,14 @@ from db_connect import connection_db
 db = connection_db()
 
 class Coupon(db.Document):
-    coupons = db.DictField(field=db.IntField())
+    code = db.StringField(required=True)
+    discount_percentage = db.IntField(required=True)
 
     def to_json(self):
         return {
-            "coupons": self.coupons
+            "_id": str(self.id),
+            "code": self.code,
+            "discount_percentage": self.discount_percentage
         }
 
 
