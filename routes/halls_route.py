@@ -4,7 +4,7 @@ from controller.hall_controller import create_hall, get_halls
 halls_route = Blueprint('halls_route', __name__)
 
 
-@halls_route.route('/booking/hall/post',methods=['GET'])
+@halls_route.route('/booking/hall/post',methods=['POST'])
 def route_post():
     return create_hall()
 
