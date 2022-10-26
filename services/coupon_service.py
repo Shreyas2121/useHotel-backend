@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from models.coupon import Coupon
+from models.Coupon import Coupon
 
 
 def service_create_coupon():

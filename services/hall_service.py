@@ -1,5 +1,5 @@
 from flask import jsonify
-from models.hall import Hall
+from models.Hall import Hall
 
 def service_create_hall():
     hall = Hall(

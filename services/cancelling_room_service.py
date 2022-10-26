@@ -1,4 +1,4 @@
-from models.booking_room import BookingRoom
+from models.BookingRoom import BookingRoom
 
 def service_cancel_booking(id):
     booking = BookingRoom.objects().get(pk=id)

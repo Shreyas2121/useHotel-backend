@@ -1,20 +1,20 @@
 from db_connect import connection_db
-from models.coupon import Coupon
+from models.Coupon import Coupon
 
 db = connection_db()
 
 class BookingRoom(db.Document):
-    name = db.StringField()
-    email = db.EmailField()
-    date = db.DateTimeField()
-    check_in_date  = db.DateField()
-    check_out_date = db.DateField()
-    room_type = db.StringField()
-    room_price = db.DecimalField()
+    name = db.StringField(required=True)
+    email = db.EmailField(required=True)
+    date = db.DateTimeField(required=True)
+    check_in_date  = db.DateField(required=True)
+    check_out_date = db.DateField(required=True)
+    category = db.StringField(required=True)
+    price = db.DecimalField(required=True)
     num_of_rooms = db.IntField(default=1)
     add_ons = db.DictField(field=db.IntField())
     coupon = db.DictField()
-    total = db.DecimalField()
+    total = db.DecimalField(required=True)
     special_request = db.StringField()
 
 
@@ -26,8 +26,8 @@ class BookingRoom(db.Document):
             "date": self.date,
             "check_in_date": self.check_in_date,
             "check_out_date": self.check_out_date,
-            "room_type": self.room_type,
-            "room_price": self.room_price,
+            "category": self.category,
+            "price": self.price,
             "num_of_rooms": self.num_of_rooms,
             "add_ons": self.add_ons,
             "coupon": self.coupon,

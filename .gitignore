@@ -4,4 +4,4 @@ __pycache__
 *.iml
 .pytest_cache
 menv
-tests
+.env
