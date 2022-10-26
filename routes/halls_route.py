@@ -1,6 +1,4 @@
 from flask import Blueprint
-from models.hall import Hall
-
 from controller.hall_controller import create_hall, get_halls
 
 halls_route = Blueprint('halls_route', __name__)

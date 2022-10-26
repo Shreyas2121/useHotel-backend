@@ -1,5 +1,6 @@
+from typing import Any
 from flask import jsonify, request
-from models.reviews import Reviews
+from models.Review import Review
 
 
 def service_get_reviews():
@@ -9,7 +10,7 @@ def service_get_reviews():
 
 def service_add_reviews():
     data: Any = request.get_json()
-    Reviews(
+    Review(
         name = data['name'],
         email = data['email'],
         reviews = data['reviews'],
@@ -18,5 +19,5 @@ def service_add_reviews():
     return jsonify({"message":"Review Added"})
 
 def service_get_top_reviews():
-    review_data = Reviews.objects(rating__gte=5)  # type: ignore
-    return jsonify({'Reviews': [review.to_json() for review in review_data ]})
+    review_data = Review.objects(rating__gte=5)  # type: ignore
+    return jsonify({'Review': [review.to_json() for review in review_data ]})

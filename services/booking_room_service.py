@@ -5,7 +5,7 @@ from datetime import datetime
 from dateutil import parser
 import requests
 
-from models.booking_room import BookingRoom
+from models.BookingRoom import BookingRoom
 
 
 def service_book_room():

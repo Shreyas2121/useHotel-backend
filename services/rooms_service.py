@@ -1,5 +1,5 @@
 from flask import jsonify
-from models.room import Room
+from models.Room import Room
 
 
 def service_get_rooms_list():
