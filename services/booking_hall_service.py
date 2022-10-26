@@ -1,4 +1,3 @@
-from datetime import date
 from typing import Any
 from flask import jsonify, request
 from dateutil import parser
