@@ -23,6 +23,8 @@ class BookingHall(db.Document):
             "booking_username": self.booking_username,
             "booking_useremail": self.booking_useremail,
             "booking_date": self.booking_date,
+            "booking_check_in": self.booking_check_in,
+            "booking_check_out": self.booking_check_out,
             "booking_hall_type": self.booking_hall_type,
             "booking_hall_price": self.booking_hall_price,
             "booking_addOns": self.booking_addOns,
