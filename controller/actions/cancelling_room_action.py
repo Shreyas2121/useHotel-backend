@@ -1,7 +1,4 @@
-from flask import jsonify, request
-from typing import Any
 from models.booking_room import BookingRoom
-from bson import ObjectId,objectid
 
 def cancel_booking(id):
     booking = BookingRoom.objects().get(pk=id)

@@ -1,4 +1,4 @@
-from flask import jsonify, request,Blueprint
+from flask import Blueprint
 from models.hall import Hall
 
 from controller.actions.hall_action import get_halls,create_hall

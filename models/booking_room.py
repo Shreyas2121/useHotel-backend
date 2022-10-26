@@ -1,4 +1,4 @@
-from db_connect import connection_db
+from connect import connection_db
 from models.room import Room
 
 db = connection_db()
