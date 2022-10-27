@@ -1,6 +1,6 @@
 from datetime import date
 from typing import Any
-from flask import jsonify, request
+from flask import Response, jsonify, request
 from datetime import datetime
 from dateutil import parser
 import requests
@@ -31,7 +31,7 @@ def service_book_room():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-    return jsonify({"message": "Booking Successful",})
+    return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
 
 def service_get_bookings():
     bookings = BookingRoom.objects()
