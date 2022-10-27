@@ -38,7 +38,7 @@ def service_get_bookings():
     return list(map(lambda x: x.to_json(), bookings))
 
 
-def service_check_booking():
+def service_check_room_availability():
     data: Any = request.get_json()
     checkin = data['checkIn']
     checkout = data['checkOut']
