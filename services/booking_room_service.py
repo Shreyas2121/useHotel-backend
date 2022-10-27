@@ -7,11 +7,8 @@ import requests
 
 from models.BookingRoom import BookingRoom
 
-
-def service_book_room():
+def book_room_service():
     data: Any = request.get_json()
-
-
     try:
         obj = BookingRoom(
         name=data['name'],
@@ -29,16 +26,16 @@ def service_book_room():
         )
         obj.save()
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return Response(status=400, mimetype='application/json', response=jsonify({"error": str(e)}))
 
     return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
 
-def service_get_bookings():
+def get_bookings_service():
     bookings = BookingRoom.objects()
-    return list(map(lambda x: x.to_json(), bookings))
+    return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
 
 
-def service_check_booking():
+def check_room_availability_service():
     data: Any = request.get_json()
     checkin = data['checkIn']
     checkout = data['checkOut']

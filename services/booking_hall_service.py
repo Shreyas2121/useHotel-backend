@@ -11,22 +11,6 @@ def service_get_hall_bookings():
     return map(lambda x: x.to_json(), booked_halls)
 
 def service_book_hall():
-    # data : Any = request.get_json()
-    # BookingHall(
-    #     name = data['name'],
-    #     email = data['email'],
-    #     date = data['date'],
-    #     check_in = data['checkin'],
-    #     check_out=data['checkout'],
-    #     hall_type = data['category'],
-    #     hall_price = data['price'],
-    #     addOns = data['selectedAddons'],
-    #     coupon = data['coupon'],
-    #     special_request = data['specialReq'],
-    #     total = data['total'],
-    # ).save()
-    # return jsonify({"message":"Booking Successful"})
-
     data: Any = request.get_json()
 
     try:
