@@ -18,4 +18,4 @@ def add_hall_service():
 
 def get_halls_service():
     all_halls = Hall.objects()
-    return Response(status=200, mimetype='application/json', response=map(lambda x: x.to_json(), all_halls))
+    return jsonify({'halls': [hall.to_json() for hall in all_halls]}), 200

@@ -42,8 +42,8 @@ def check_room_availability_service():
     parsed_check_in = parser.isoparse(checkin)
     parsed_check_out = parser.isoparse(checkout)
 
-    obj = BookingRoom.objects(check_in__lte=parsed_check_in, check_out__gt=parsed_check_in,)
-    obj2 = BookingRoom.objects(check_in__lt=parsed_check_out, check_out__gte=parsed_check_out,)
+    obj = BookingRoom.objects(check_in_date__lte=parsed_check_in, check_out_date__gt=parsed_check_in,)
+    obj2 = BookingRoom.objects(check_in_date__lt=parsed_check_out, check_out_date__gte=parsed_check_out,)
     data = list(map(lambda x: x.to_json(), obj))
     data1 = list(map(lambda x: x.to_json(), obj2))
 
@@ -51,7 +51,7 @@ def check_room_availability_service():
         if not i in data:
             data.append(i)
 
-    res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/room/getDetails')
+    res = requests.get('http://127.0.0.1:5000/api/room/getDetails')
 
     available_rooms = {}
     for each in res.json().get('rooms'):
