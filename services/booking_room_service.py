@@ -10,25 +10,24 @@ from models.BookingRoom import BookingRoom
 
 def service_book_room():
     data: Any = request.get_json()
-    print(data)
+
 
     try:
-        booking_obj = BookingRoom(
-        booking_username=data['name'],
-        booking_useremail=data['email'],
-        booking_date=data['date'],
-        booking_check_in=data['checkin'],
-        booking_check_out=data['checkout'],
-        booking_room_type=data['roomType'],
-        booking_room_price=data['roomPrice'],
-        booking_no_of_rooms=data['no'],
-        booking_addOns=data['selectedAddons'],
-        booking_coupon_id=data['couponId'],
-        booking_coupon_discount=data['discount'],
-        booking_special_request=data['specialReq'],
-        booking_total=data['total'],
+        obj = BookingRoom(
+        name=data['name'],
+        email=data['email'],
+        date=data['date'],
+        check_in=data['checkin'],
+        check_out=data['checkout'],
+        room_type=data['category'],
+        room_price=data['price'],
+        no_of_rooms=data['no'],
+        addOns=data['selectedAddons'],
+        coupon = data['coupon'],
+        special_request=data['specialReq'],
+        total=data['total'],
         )
-        booking_obj.save()
+        obj.save()
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -46,29 +45,29 @@ def service_check_booking():
     parsed_check_in = parser.isoparse(checkin)
     parsed_check_out = parser.isoparse(checkout)
 
-    booking_obj = BookingRoom.objects(booking_check_in__lte=parsed_check_in, booking_check_out__gt=parsed_check_in,)
-    booking_obj2 = BookingRoom.objects(booking_check_in__lt=parsed_check_out, booking_check_out__gte=parsed_check_out,)
-    booking_data = list(map(lambda x: x.to_json(), booking_obj))
-    booking_data1 = list(map(lambda x: x.to_json(), booking_obj2))
+    obj = BookingRoom.objects(check_in__lte=parsed_check_in, check_out__gt=parsed_check_in,)
+    obj2 = BookingRoom.objects(check_in__lt=parsed_check_out, check_out__gte=parsed_check_out,)
+    data = list(map(lambda x: x.to_json(), obj))
+    data1 = list(map(lambda x: x.to_json(), obj2))
 
-    for i in booking_data1:
-        if not i in booking_data:
-            booking_data.append(i)
+    for i in data1:
+        if not i in data:
+            data.append(i)
 
     res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/room/getDetails')
 
     available_rooms = {}
     for each in res.json().get('rooms'):
-        available_rooms[each["room_type"]] = each["total_rooms"]
+        available_rooms[each["category"]] = each["total_rooms"]
 
     new={}
-    for i in booking_data:
+    for i in data:
         for key,value in i.items():
-            if key == 'booking_room_type':
+            if key == 'category':
                 if value in new:
-                    new[value] = new[value]+i['booking_no_of_rooms']
+                    new[value] = new[value]+i['num_of_rooms']
                 else:
-                    new[value] = i['booking_no_of_rooms']
+                    new[value] = i['num_of_rooms']
 
     for key, value in new.items():
         if key in available_rooms:

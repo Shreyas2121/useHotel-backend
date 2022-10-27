@@ -21,5 +21,5 @@ class Hall(db.Document):
             "desc": self.desc,
             "images": self.images,
             "total_halls": self.total_halls,
-            "amenties": self.amenities
+            "amenities": self.amenities
         }

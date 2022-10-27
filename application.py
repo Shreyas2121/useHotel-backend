@@ -23,11 +23,5 @@ application.register_blueprint(reviews_route)
 application.register_blueprint(cancel_room_route)
 application.register_blueprint(cancel_hall_route)
 
-
-@application.route('/')
-def index():
-
-    return "Hello World"
-
 if __name__ == '__main__':
     application.run(debug=True)
