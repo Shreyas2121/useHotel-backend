@@ -10,7 +10,6 @@ def get_booking_rooms_controller():
 def check_booking_room_controller():
     return booking_room_service.service_check_room_availability()
 
-
 def delete_room_booking():
     return cancelling_room_service.service_delete_booking()
 
