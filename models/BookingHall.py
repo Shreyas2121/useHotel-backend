@@ -21,6 +21,8 @@ class BookingHall(db.Document):
             "name": self.name,
             "email": self.email,
             "date": self.date,
+            "check_in_date": self.check_in_date,
+            "check_out_date": self.check_out_date,
             "category": self.category,
             "price": self.price,
             "add_ons": self.add_ons,
