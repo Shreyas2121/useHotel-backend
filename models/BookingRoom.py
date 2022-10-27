@@ -12,7 +12,7 @@ class BookingRoom(db.Document):
     category = db.StringField(required=True)
     price = db.DecimalField(required=True)
     num_of_rooms = db.IntField(default=1)
-    add_ons = db.DictField(field=db.IntField())
+    add_ons = db.DictField()
     coupon = db.DictField()
     total = db.DecimalField(required=True)
     special_request = db.StringField()
