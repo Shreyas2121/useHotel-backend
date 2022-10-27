@@ -3,12 +3,12 @@ from flask import jsonify, request, Response
 from models.Review import Review
 
 
-def service_get_reviews():
+def get_reviews_service():
     review_data = Reviews.objects()  # type: ignore
     return jsonify({'Reviews': [review.to_json() for review in review_data ]})
 
 
-def service_add_reviews():
+def add_reviews_service():
     data: Any = request.get_json()
     Review(
         name = data['name'],
@@ -19,6 +19,6 @@ def service_add_reviews():
 
     return Response(status=200, mimetype='application/json', response='{"message":"Review Added"}')  
 
-def service_get_top_reviews():
+def get_top_reviews_service():
     review_data = Review.objects(rating=5)  # type: ignore
     return jsonify({'Review': [review.to_json() for review in review_data ]})
