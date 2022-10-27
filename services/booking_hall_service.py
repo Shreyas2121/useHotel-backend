@@ -1,10 +1,9 @@
 from typing import Any
 from flask import Response, jsonify, request
 from dateutil import parser
-import requests
 
 from models.BookingHall import BookingHall
-from hall_service import service_get_halls
+from services.hall_service import service_get_halls
 
 def service_get_hall_bookings():
     booked_halls = BookingHall.objects()
