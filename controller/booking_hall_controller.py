@@ -1,6 +1,8 @@
 from services import booking_hall_service
 from services import cancelling_hall_service
 
+def get_hall_bookings_controller():
+    return booking_hall_service.service_get_hall_bookings()
 
 def book_hall_controller():
     return booking_hall_service.service_book_hall()

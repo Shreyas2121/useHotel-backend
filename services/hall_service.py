@@ -17,5 +17,5 @@ def service_add_hall():
 
 
 def service_get_halls():
-    halls = Hall.objects()
-    return jsonify({'halls': [hall.to_json() for hall in halls]})
+    all_halls = Hall.objects()
+    return map(lambda x: x.to_json(), all_halls)
