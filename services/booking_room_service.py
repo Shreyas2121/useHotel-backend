@@ -9,26 +9,27 @@ from models.BookingRoom import BookingRoom
 
 def book_room_service():
     data: Any = request.get_json()
+    print(data)
     try:
         obj = BookingRoom(
         name=data['name'],
         email=data['email'],
         date=data['date'],
-        check_in=data['checkin'],
-        check_out=data['checkout'],
-        room_type=data['category'],
-        room_price=data['price'],
-        no_of_rooms=data['no'],
-        addOns=data['selectedAddons'],
+        check_in_date=data['checkin'],
+        check_out_date=data['checkout'],
+        category=data['roomType'],
+        price=data['roomPrice'],
+        num_of_rooms=data['no'],
+        add_ons =data['selectedAddons'],
         coupon = data['coupon'],
         special_request=data['specialReq'],
         total=data['total'],
         )
         obj.save()
     except Exception as e:
-        return Response(status=400, mimetype='application/json', response=jsonify({"error": str(e)}))
+        return jsonify({'message': 'Error Occured'}), 400
 
-    return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
+    return jsonify({"message": "Booking Successful"})
 
 def get_bookings_service():
     bookings = BookingRoom.objects()
