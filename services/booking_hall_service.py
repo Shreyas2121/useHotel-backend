@@ -34,6 +34,7 @@ def service_book_hall():
 
 def service_check_hall_availability():
     data: Any = request.get_json()
+    print(data)
     # checkin = data['checkIn']
     # checkout = data['checkOut']
     # parsed_check_in = parser.isoparse(data['checkIn'])
@@ -41,9 +42,9 @@ def service_check_hall_availability():
 
     # obj1 = BookingHall.objects(check_in__lte=parser.isoparse(data['checkIn']), check_out__gte=parser.isoparse(data['checkIn']),)
     # obj2 = BookingHall.objects(check_in__lte=parser.isoparse(data['checkOut']), check_out__gte=parser.isoparse(data['checkOut']),)
-    
-    booked_halls_checkin = BookingHall.objects(check_in__lte=parser.isoparse(data['checkIn']), check_out__gte=parser.isoparse(data['checkIn']),)
-    booked_hall_chechout = BookingHall.objects(check_in__lte=parser.isoparse(data['checkOut']), check_out__gte=parser.isoparse(data['checkOut']),)
+
+    booked_halls_checkin = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']), check_out_date__gte=parser.isoparse(data['checkIn']),)
+    booked_hall_chechout = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']), check_out_date__gte=parser.isoparse(data['checkOut']),)
 
     # data1 = list(map(lambda x: x.to_json(), obj1))
     # data2 = list(map(lambda x: x.to_json(), obj2))

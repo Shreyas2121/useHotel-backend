@@ -1,10 +1,9 @@
 import json
 import pytest
-from app import app
-
+from ..application import application
 
 def test_get_reviews():
-    res=app.test_client().get('/reviews/')
+    res=application.test_client().get('/reviews/')
     assert res.status_code == 200
 
 def test_add_reviews():
@@ -14,12 +13,15 @@ def test_add_reviews():
         "reviews": "test",
         "rating": 5
     }
-    res=app.test_client().post('/reviews/',json=data_to_post)
+    res=application.test_client().post('/reviews/',json=data_to_post)
     print(res.data)
-    assert json.loads(res.data)['message'] == "Review Added"
+    assert res.status_code == 200
+    assert json.loads(res.data) == {"message":"Review Added"}
+    assert res.mimetype == 'application/json'
+    # assert json.loads(res.data)['message'] == "Review Added"
 
 def test_get_top_reviews():
-    res=app.test_client().get('/reviews/featured')
+    res=application.test_client().get('/reviews/featured')
     assert res.status_code == 200
 
 
