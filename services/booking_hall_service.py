@@ -58,24 +58,24 @@ def check_hall_availability_service():
 
     hall_inventory = get_halls_service()
 
-    print(booked_halls)
-    print(hall_inventory)
+    # print(booked_halls)
+    # print(hall_inventory)
 
-    # available_halls = {}
-    # for each in hall_inventory.get('halls'):
-    #     available_halls[each["category"]] = each["total_halls"]
+    available_halls = {}
+    for each in hall_inventory.get('halls'):
+        available_halls[each["category"]] = each["total_halls"]
 
-    # new={}
-    # for i in data:
-    #     for key,value in i.items():
-    #         if key == 'category':
-    #             if value in new:
-    #                 new[value] +=  1
-    #             else:
-    #                 new[value] = 1
+    new={}
+    for i in data:
+        for key,value in i.items():
+            if key == 'category':
+                if value in new:
+                    new[value] +=  1
+                else:
+                    new[value] = 1
 
-    # for key, value in new.items():
-    #     if key in available_halls:
-    #         available_halls[key] -= int(value)
+    for key, value in new.items():
+        if key in available_halls:
+            available_halls[key] -= int(value)
 
-    # return available_halls
+    return available_halls
