@@ -1,13 +1,31 @@
 from typing import Any
-from flask import jsonify, request
+from flask import Response, jsonify, request
 from dateutil import parser
 import requests
 
 from models.BookingHall import BookingHall
 
 def service_book_hall():
-    data : Any = request.get_json()
-    BookingHall(
+    # data : Any = request.get_json()
+    # BookingHall(
+    #     name = data['name'],
+    #     email = data['email'],
+    #     date = data['date'],
+    #     check_in = data['checkin'],
+    #     check_out=data['checkout'],
+    #     hall_type = data['category'],
+    #     hall_price = data['price'],
+    #     addOns = data['selectedAddons'],
+    #     coupon = data['coupon'],
+    #     special_request = data['specialReq'],
+    #     total = data['total'],
+    # ).save()
+    # return jsonify({"message":"Booking Successful"})
+
+    data: Any = request.get_json()
+
+    try:
+        obj = BookingHall(
         name = data['name'],
         email = data['email'],
         date = data['date'],
@@ -19,21 +37,19 @@ def service_book_hall():
         coupon = data['coupon'],
         special_request = data['specialReq'],
         total = data['total'],
-    ).save()
-    return jsonify({"message":"Booking Successful"})
+        )
+        obj.save()
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
-# def check_bookings():
-#     checkin = request.get_json()['checkin']
-#     parsed_check_in = parser.isoparse(checkin)
-#     bookings = BookingHall.objects(check_in=parsed_check_in)
-#     return list(map(lambda x: x.hall_type, bookings))
+    return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
 
-def service_check_bookings():
+def service_check_hall_availability():
     data: Any = request.get_json()
-    checkin = data['checkIn']
-    checkout = data['checkOut']
-    parsed_check_in = parser.isoparse(checkin)
-    parsed_check_out = parser.isoparse(checkout)
+    # checkin = data['checkIn']
+    # checkout = data['checkOut']
+    parsed_check_in = parser.isoparse(data['checkIn'])
+    parsed_check_out = parser.isoparse(data['checkOut'])
 
     obj1 = BookingHall.objects(check_in__lte=parsed_check_in, check_out__gte=parsed_check_in,)
     obj2 = BookingHall.objects(check_in__lte=parsed_check_out, check_out__gte=parsed_check_out,)
