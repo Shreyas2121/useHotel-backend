@@ -2,7 +2,7 @@ from typing import Any
 from flask import jsonify,request
 from models.Hall import Hall
 
-def service_create_hall():
+def service_add_hall():
     data:Any = request.get_json()
     hall = Hall(
         category = data['category'],
