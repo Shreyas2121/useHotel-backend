@@ -10,4 +10,4 @@ def delete_booking_service(id):
 def get_bookings_by_email_service(email):
     bookings = BookingHall.objects().filter(email=email)
     print(bookings)
-    return list(map(lambda x: x.to_json(), bookings))
+    return Response(list(map(lambda x: x.to_json(), bookings)), status=200, mimetype='application/json')
