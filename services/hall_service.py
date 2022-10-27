@@ -1,8 +1,8 @@
 from typing import Any
-from flask import jsonify,request
+from flask import Response, jsonify,request
 from models.Hall import Hall
 
-def service_add_hall():
+def add_hall_service():
     data:Any = request.get_json()
     hall = Hall(
         category = data['category'],
@@ -13,9 +13,9 @@ def service_add_hall():
         images = data['images'],
     )
     hall.save()
-    return jsonify({'hall': hall.to_json()})
+    return Response(status=200, mimetype='application/json', response='{"message": "Added Successfully"}')
 
 
-def service_get_halls():
+def get_halls_service():
     all_halls = Hall.objects()
-    return map(lambda x: x.to_json(), all_halls)
+    return Response(status=200, mimetype='application/json', response=map(lambda x: x.to_json(), all_halls))

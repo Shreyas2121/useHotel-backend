@@ -3,13 +3,14 @@ from flask import Response, jsonify, request
 from dateutil import parser
 
 from models.BookingHall import BookingHall
-from services.hall_service import service_get_halls
+from services.hall_service import get_halls_service
 
-def service_get_hall_bookings():
+def get_hall_bookings_service():
     booked_halls = BookingHall.objects()
-    return map(lambda x: x.to_json(), booked_halls)
+    return Response(status=200, mimetype='application/json', response=map(lambda x: x.to_json(), booked_halls))
 
-def service_book_hall():
+
+def book_hall_service():
     data: Any = request.get_json()
 
     try:
@@ -32,7 +33,7 @@ def service_book_hall():
 
     return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
 
-def service_check_hall_availability():
+def check_hall_availability_service():
     data: Any = request.get_json()
     print(data)
     # checkin = data['checkIn']
@@ -44,7 +45,7 @@ def service_check_hall_availability():
     # obj2 = BookingHall.objects(check_in__lte=parser.isoparse(data['checkOut']), check_out__gte=parser.isoparse(data['checkOut']),)
 
     booked_halls_checkin = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']), check_out_date__gte=parser.isoparse(data['checkIn']),)
-    booked_hall_chechout = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']), check_out_date__gte=parser.isoparse(data['checkOut']),)
+    booked_hall_checkout = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']), check_out_date__gte=parser.isoparse(data['checkOut']),)
 
     # data1 = list(map(lambda x: x.to_json(), obj1))
     # data2 = list(map(lambda x: x.to_json(), obj2))
@@ -53,9 +54,9 @@ def service_check_hall_availability():
     # res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/hall/getDetails')
 
 
-    booked_halls=(list(map(lambda x: x.to_json(), booked_halls_checkin)))+(list(map(lambda x: x.to_json(), booked_hall_chechout)))
+    booked_halls=(list(map(lambda x: x.to_json(), booked_halls_checkin)))+(list(map(lambda x: x.to_json(), booked_hall_checkout)))
 
-    hall_inventory = service_get_halls()
+    hall_inventory = get_halls_service()
 
     print(booked_halls)
     print(hall_inventory)
