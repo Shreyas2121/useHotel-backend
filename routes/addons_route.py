@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from controller.addon_controller import get_addons_data,create_addons
+from controller.addon_controller import get_addons,create_addons
 
 addons_route = Blueprint('addons_route', __name__)
 
@@ -10,4 +10,4 @@ def create_addon():
 
 @addons_route.route('/booking/addon',methods=['GET'])
 def route_index():
-    return get_addons_data()
+    return get_addons()
