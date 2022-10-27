@@ -52,6 +52,7 @@ def check_room_availability_service():
             data.append(i)
 
     res = requests.get('http://127.0.0.1:5000/api/room/getDetails')
+    print(res.json())
 
     available_rooms = {}
     for each in res.json().get('rooms'):
