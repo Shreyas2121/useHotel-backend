@@ -1,4 +1,5 @@
 from typing import Any
+from unicodedata import category
 from flask import Response, jsonify, request
 from dateutil import parser
 import requests
@@ -13,17 +14,17 @@ def get_hall_bookings_service():
 
 def book_hall_service():
     data: Any = request.get_json()
-
+    print(data)
     try:
         obj = BookingHall(
         name = data['name'],
         email = data['email'],
         date = data['date'],
-        check_in = data['checkin'],
-        check_out=data['checkout'],
-        hall_type = data['category'],
-        hall_price = data['price'],
-        addOns = data['selectedAddons'],
+        check_in_date = data['checkin'],
+        check_out_date = data['checkout'],
+        category = data['roomType'],
+        price = data['roomPrice'],
+        add_ons = data['selectedAddons'],
         coupon = data['coupon'],
         special_request = data['specialReq'],
         total = data['total'],
@@ -32,7 +33,7 @@ def book_hall_service():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-    return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
+    return jsonify({"message": "Booking Successful"}), 200
 
 def check_hall_availability_service():
     data: Any = request.get_json()
