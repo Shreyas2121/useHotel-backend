@@ -1,9 +1,7 @@
-from datetime import date
 from typing import Any
-from flask import Response, jsonify, request
-from datetime import datetime
+from flask import jsonify, request,json
 from dateutil import parser
-import requests
+from services.rooms_service import get_rooms_service
 
 from models.BookingRoom import BookingRoom
 
@@ -33,41 +31,39 @@ def book_room_service():
 
 def get_bookings_service():
     bookings = BookingRoom.objects()
-    return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
+    return list(map(lambda x: x.to_json(), bookings))
 
 
 def check_room_availability_service():
     data: Any = request.get_json()
-    checkin = data['checkIn']
-    checkout = data['checkOut']
-    parsed_check_in = parser.isoparse(checkin)
-    parsed_check_out = parser.isoparse(checkout)
+    parsed_check_in = parser.isoparse(data['checkIn'])
+    parsed_check_out = parser.isoparse(data['checkOut'])
 
-    obj = BookingRoom.objects(check_in_date__lte=parsed_check_in, check_out_date__gt=parsed_check_in,)
-    obj2 = BookingRoom.objects(check_in_date__lt=parsed_check_out, check_out_date__gte=parsed_check_out,)
-    data = list(map(lambda x: x.to_json(), obj))
-    data1 = list(map(lambda x: x.to_json(), obj2))
+    if parsed_check_in > parsed_check_out:
+        return jsonify({"message": "Check in date should be before check out date"}), 400
 
-    for i in data1:
-        if not i in data:
-            data.append(i)
+    booking_room_checkin = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__lte=parsed_check_in, check_out_date__gt=parsed_check_in,)))
+    booking_room_checkout = list(map(lambda x: x.to_json(),BookingRoom.objects(check_in_date__lt=parsed_check_out, check_out_date__gte=parsed_check_out,) ))
 
-    res = requests.get('http://127.0.0.1:5000/api/room/getDetails')
 
+    booking_room_checkout.extend(x for x in booking_room_checkin if x not in booking_room_checkout)
+
+    rooms = get_rooms_service()
     available_rooms = {}
-    for each in res.json().get('rooms'):
+    for each in rooms[0].json.get('rooms'):
         available_rooms[each["category"]] = each["total_rooms"]
 
-    new={}
-    for i in data:
+
+    booked_room_type={}
+    for i in booking_room_checkout:
         for key,value in i.items():
             if key == 'category':
-                if value in new:
-                    new[value] = new[value]+i['num_of_rooms']
+                if value in booked_room_type:
+                    booked_room_type[value] = booked_room_type[value]+i['num_of_rooms']
                 else:
-                    new[value] = i['num_of_rooms']
+                    booked_room_type[value] = i['num_of_rooms']
 
-    for key, value in new.items():
+    for key, value in booked_room_type.items():
         if key in available_rooms:
             available_rooms[key] -= int(value)
 

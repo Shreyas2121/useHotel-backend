@@ -20,4 +20,4 @@ def create_room_service():
 
 def get_rooms_service():
     rooms = Room.objects()  # type: ignore
-    return jsonify({'rooms': [room.to_json() for room in rooms]})
+    return jsonify({'rooms': [room.to_json() for room in rooms]}), 200
