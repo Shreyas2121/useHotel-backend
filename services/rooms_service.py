@@ -2,8 +2,7 @@ from typing import Any
 from flask import jsonify,request
 from models.Room import Room
 
-
-def service_create_room():
+def create_room_service():
     data:Any = request.get_json()
     room = Room(
         category = data['category'],
@@ -19,6 +18,6 @@ def service_create_room():
     return jsonify({'room': room.to_json()})
 
 
-def service_get_rooms_list():
+def get_rooms_service():
     rooms = Room.objects()  # type: ignore
     return jsonify({'rooms': [room.to_json() for room in rooms]})

@@ -8,9 +8,9 @@ def book_room():
     return book_room_controller()
 
 @booking_route.route('/booking/room', methods=['GET'])
-def route_get():
+def get_rooms():
     return get_booking_rooms_controller()
 
-@booking_route.route('/booking/room/check', methods=['POST'])
-def route_check():
+@booking_route.route('/booking/room/availability', methods=['POST'])
+def get_rooms_availability():
     return check_booking_room_controller()
