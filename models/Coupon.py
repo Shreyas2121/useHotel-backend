@@ -1,6 +1,6 @@
-from db_connect import connection_db
+from db_connect import db_connect
 
-db = connection_db()
+db = db_connect()
 
 class Coupon(db.Document):
     code = db.StringField(required=True)
@@ -8,7 +8,7 @@ class Coupon(db.Document):
 
     def to_json(self):
         return {
-            "_id": str(self.id),
+            "_id": str(self.pk),
             "code": self.code,
             "discount_percentage": self.discount_percentage
         }

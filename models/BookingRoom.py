@@ -1,7 +1,7 @@
-from db_connect import connection_db
+from db_connect import db_connect
 from models.Coupon import Coupon
 
-db = connection_db()
+db = db_connect()
 
 class BookingRoom(db.Document):
     name = db.StringField(required=True)

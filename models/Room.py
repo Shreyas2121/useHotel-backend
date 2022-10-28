@@ -1,16 +1,16 @@
-from db_connect import connection_db
+from db_connect import db_connect
 
-db = connection_db()
+db = db_connect()
 
 class Room(db.Document):
-    category = db.StringField(requird=True)
-    price = db.DecimalField(requird=True)
-    occupancy = db.IntField(requird=True)
-    desc = db.StringField(requird=True)
+    category = db.StringField(required=True)
+    price = db.DecimalField(required=True)
+    occupancy = db.IntField(required=True)
+    desc = db.StringField(required=True)
     amenities = db.ListField(db.StringField())
     images = db.DictField(field=db.StringField())
-    total_rooms = db.IntField(requird=True)
-    area_sq_ft = db.FloatField(requird=True)
+    total_rooms = db.IntField(required=True)
+    area_sq_ft = db.FloatField(required=True)
 
 
     def to_json(self):

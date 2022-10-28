@@ -4,6 +4,6 @@ def create_addons_controller():
     return addon_service.create_addon_service()
 
 def get_addons_controller():
-    return addon_service.get_addons_data_service()
+    return addon_service.get_addons_service()
 
 
