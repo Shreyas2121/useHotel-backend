@@ -39,7 +39,7 @@ def get_bookings_service():
     return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
 
 
-def check_room_availability_service():
+def get_room_availability_service():
     data: Any = request.get_json()
     parsed_check_in = parser.isoparse(data['checkIn'])
     parsed_check_out = parser.isoparse(data['checkOut'])

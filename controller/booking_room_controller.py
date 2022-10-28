@@ -7,8 +7,8 @@ def book_room_controller():
 def get_booking_rooms_controller():
     return booking_room_service.get_bookings_service()
 
-def check_booking_room_controller():
-    return booking_room_service.check_room_availability_service()
+def get_booking_room_controller():
+    return booking_room_service.get_room_availability_service()
 
 
 

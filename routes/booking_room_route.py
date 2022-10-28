@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from controller.booking_room_controller import book_room_controller,get_booking_rooms_controller,check_booking_room_controller
+from controller.booking_room_controller import book_room_controller,get_booking_rooms_controller,get_booking_room_controller
 booking_route = Blueprint('booking_route', __name__)
 
 @booking_route.route('/booking/room', methods=['POST'])
@@ -13,4 +13,4 @@ def get_rooms():
 
 @booking_route.route('/booking/room/availability', methods=['POST'])
 def get_rooms_availability():
-    return check_booking_room_controller()
+    return get_booking_room_controller()
