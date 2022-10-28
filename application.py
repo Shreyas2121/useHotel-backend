@@ -7,8 +7,6 @@ from routes.addons_route import addons_route
 from routes.booking_room_route import booking_route
 from routes.booking_hall_route import booking_hall_route
 from routes.reviews_route import reviews_route
-from routes.cancelling_room_route import cancel_room_route
-from routes.cancelling_hall_route import cancel_hall_route
 
 application = Flask(__name__)
 CORS(application)
