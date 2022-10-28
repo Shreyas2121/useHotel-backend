@@ -41,12 +41,17 @@ def get_hall_availability_service():
     booked_halls_checkin = (list(map(lambda x: x.to_json(),
                                      BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']),
                                                          check_out_date__gte=parser.isoparse(data['checkIn']), ))))
-    booked_hall_checkout = (list(map(lambda x: x.to_json(),
+    booked_halls_checkout = (list(map(lambda x: x.to_json(),
                                      BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']),
                                                          check_out_date__gte=parser.isoparse(data['checkOut']), ))))
 
+    booked_halls_between = (list(map(lambda x: x.to_json(),
+                                     BookingHall.objects(check_in_date__gte=parser.isoparse(data['checkIn']),
+                                                         check_out_date__lte=parser.isoparse(data['checkOut']), ))))
+
     booked_halls_data = booked_halls_checkin
-    booked_halls_data.extend(halls for halls in booked_hall_checkout if halls not in booked_halls_data)
+    booked_halls_data.extend(halls for halls in booked_halls_checkout if halls not in booked_halls_data)
+    booked_halls_data.extend(halls for halls in booked_halls_between if halls not in booked_halls_data)
 
     hall_inventory = get_halls_service()
 
