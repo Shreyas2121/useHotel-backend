@@ -3,7 +3,7 @@ import pytest
 from ..application import application
 
 def test_get_reviews():
-    res=application.test_client().get('/reviews/')
+    res=application.test_client().get('/reviews')
     assert res.status_code == 200
 
 def test_add_reviews():
@@ -13,7 +13,7 @@ def test_add_reviews():
         "reviews": "test",
         "rating": 5
     }
-    res=application.test_client().post('/reviews/',json=data_to_post)
+    res=application.test_client().post('/reviews',json=data_to_post)
     print(res.data)
     assert res.status_code == 200
     assert json.loads(res.data) == {"message":"Review Added"}

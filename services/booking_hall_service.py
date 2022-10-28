@@ -1,6 +1,8 @@
 from typing import Any
+from unicodedata import category
 from flask import Response, jsonify, request
 from dateutil import parser
+import requests
 
 from models.BookingHall import BookingHall
 from services.hall_service import get_halls_service
@@ -12,17 +14,17 @@ def get_hall_bookings_service():
 
 def book_hall_service():
     data: Any = request.get_json()
-
+    print(data)
     try:
         obj = BookingHall(
         name = data['name'],
         email = data['email'],
         date = data['date'],
-        check_in = data['checkin'],
-        check_out=data['checkout'],
-        hall_type = data['category'],
-        hall_price = data['price'],
-        addOns = data['selectedAddons'],
+        check_in_date = data['checkin'],
+        check_out_date = data['checkout'],
+        category = data['roomType'],
+        price = data['roomPrice'],
+        add_ons = data['selectedAddons'],
         coupon = data['coupon'],
         special_request = data['specialReq'],
         total = data['total'],
@@ -31,50 +33,35 @@ def book_hall_service():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-    return Response(status=200, mimetype='application/json', response='{"message": "Booking Successful"}')
+    return jsonify({"message": "Booking Successful"}), 200
 
 def check_hall_availability_service():
     data: Any = request.get_json()
-    print(data)
-    # checkin = data['checkIn']
-    # checkout = data['checkOut']
-    # parsed_check_in = parser.isoparse(data['checkIn'])
-    # parsed_check_out = parser.isoparse(data['checkOut'])
 
-    # obj1 = BookingHall.objects(check_in__lte=parser.isoparse(data['checkIn']), check_out__gte=parser.isoparse(data['checkIn']),)
-    # obj2 = BookingHall.objects(check_in__lte=parser.isoparse(data['checkOut']), check_out__gte=parser.isoparse(data['checkOut']),)
+    booked_halls_checkin = (list(map(lambda x: x.to_json(), BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']), check_out_date__gte=parser.isoparse(data['checkIn']),))))
+    booked_hall_checkout = (list(map(lambda x: x.to_json(), BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']), check_out_date__gte=parser.isoparse(data['checkOut']),))))
 
-    booked_halls_checkin = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']), check_out_date__gte=parser.isoparse(data['checkIn']),)
-    booked_hall_checkout = BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']), check_out_date__gte=parser.isoparse(data['checkOut']),)
-
-    # data1 = list(map(lambda x: x.to_json(), obj1))
-    # data2 = list(map(lambda x: x.to_json(), obj2))
-
-    # data=data1+data2
-    # res = requests.get('http://usehotelbackend-env.eba-x3zhkiev.ap-northeast-1.elasticbeanstalk.com/booking/hall/getDetails')
-
-
-    booked_halls=(list(map(lambda x: x.to_json(), booked_halls_checkin)))+(list(map(lambda x: x.to_json(), booked_hall_checkout)))
+    booked_halls_data = booked_halls_checkin
+    booked_halls_data.extend(halls for halls in booked_hall_checkout if halls not in booked_halls_data)
 
     hall_inventory = get_halls_service()
 
-    # print(booked_halls)
-    # print(hall_inventory)
+    total_halls_inventory = {}
+    for each in hall_inventory[0].json.get('halls'):
+        total_halls_inventory[each["category"]] = each["total_halls"]
 
-    available_halls = {}
-    for each in hall_inventory.get('halls'):
-        available_halls[each["category"]] = each["total_halls"]
 
-    new={}
-    for i in data:
+    booked_halls_type={}
+    for i in booked_halls_data:
         for key,value in i.items():
             if key == 'category':
-                if value in new:
-                    new[value] +=  1
+                if value in booked_halls_type:
+                    booked_halls_type[value] +=  1
                 else:
-                    new[value] = 1
+                    booked_halls_type[value] = 1
 
-    for key, value in new.items():
+    available_halls = total_halls_inventory
+    for key, value in booked_halls_type.items():
         if key in available_halls:
             available_halls[key] -= int(value)
 

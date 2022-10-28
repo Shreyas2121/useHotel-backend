@@ -4,8 +4,8 @@ from models.Review import Review
 
 
 def get_reviews_service():
-    review_data = Reviews.objects()  # type: ignore
-    return jsonify({'Reviews': [review.to_json() for review in review_data ]})
+    review_data = Review.objects()  # type: ignore
+    return jsonify({'Review': review.to_json() for review in review_data }),200
 
 
 def add_reviews_service():
@@ -13,12 +13,12 @@ def add_reviews_service():
     Review(
         name = data['name'],
         email = data['email'],
-        reviews = data['reviews'],
+        review = data['review'],
         rating = data['rating'],
     ).save()
 
-    return Response(status=200, mimetype='application/json', response='{"message":"Review Added"}')  
+    return Response(status=200, mimetype='application/json', response='{"message":"Review Added"}')
 
 def get_top_reviews_service():
     review_data = Review.objects(rating=5)  # type: ignore
-    return jsonify({'Review': [review.to_json() for review in review_data ]})
+    return jsonify({'Review': [review.to_json() for review in review_data ]}),200
