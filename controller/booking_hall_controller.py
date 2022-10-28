@@ -10,8 +10,8 @@ def book_hall_controller():
 def get_halls_availability_controller():
     return booking_hall_service.check_hall_availability_service()
 
-def delete_hall_booking_controller():
-    return cancelling_hall_service.delete_booking_service()
+def delete_hall_booking_controller(_id):
+    return cancelling_hall_service.delete_booking_service(_id)
 
-def get_bookings_by_email_controller():
-    return cancelling_hall_service.get_bookings_by_email_service()
+def get_bookings_by_email_controller(email):
+    return cancelling_hall_service.get_bookings_by_email_service(email)
