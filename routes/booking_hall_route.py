@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 from controller.booking_hall_controller import get_hall_bookings_controller,book_hall_controller,get_halls_availability_controller
 
@@ -12,6 +12,6 @@ def get_hall_bookings():
 def book_hall():
     return book_hall_controller()
 
-@booking_hall_route.route('/booking/hall/availability',methods=['POST'])
+@booking_hall_route.route('/booking/hall/availability',methods=['GET'])
 def get_halls_availability():
     return get_halls_availability_controller()

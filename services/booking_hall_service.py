@@ -15,7 +15,6 @@ def get_hall_bookings_service():
 
 def book_hall_service():
     data: Any = request.get_json()
-    print(data)
     try:
         obj = BookingHall(
             name=data['name'],
@@ -36,9 +35,8 @@ def book_hall_service():
 
     return jsonify({"message": "Booking Successful"}), 200
 
-
-def check_hall_availability_service():
-    data: Any = request.get_json()
+def get_hall_availability_service():
+    data: Any = request.args.to_dict()
 
     booked_halls_checkin = (list(map(lambda x: x.to_json(),
                                      BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']),
