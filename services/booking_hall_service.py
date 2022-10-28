@@ -1,8 +1,6 @@
 from typing import Any
-from unicodedata import category
 from flask import Response, jsonify, request
 from dateutil import parser
-import requests
 
 from models.BookingHall import BookingHall
 from services.hall_service import get_halls_service
@@ -35,6 +33,7 @@ def book_hall_service():
 
     return jsonify({"message": "Booking Successful"}), 200
 
+
 def get_hall_availability_service():
     data: Any = request.args.to_dict()
 
@@ -42,8 +41,8 @@ def get_hall_availability_service():
                                      BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkIn']),
                                                          check_out_date__gte=parser.isoparse(data['checkIn']), ))))
     booked_halls_checkout = (list(map(lambda x: x.to_json(),
-                                     BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']),
-                                                         check_out_date__gte=parser.isoparse(data['checkOut']), ))))
+                                      BookingHall.objects(check_in_date__lte=parser.isoparse(data['checkOut']),
+                                                          check_out_date__gte=parser.isoparse(data['checkOut']), ))))
 
     booked_halls_between = (list(map(lambda x: x.to_json(),
                                      BookingHall.objects(check_in_date__gte=parser.isoparse(data['checkIn']),
@@ -75,10 +74,12 @@ def get_hall_availability_service():
 
     return available_halls
 
+
 def delete_booking_service(id):
     booking = BookingHall.objects().get(pk=id)
     booking.delete()
     return Response("Hall Booking Deleted", status=200, mimetype='application/json')
+
 
 def get_bookings_by_email_service(email):
     bookings = BookingHall.objects().filter(email=email)

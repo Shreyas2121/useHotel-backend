@@ -2,6 +2,7 @@ from db_connect import db_connect
 
 db = db_connect()
 
+
 class BookingHall(db.Document):
     name = db.StringField(required=True)
     email = db.EmailField(required=True)

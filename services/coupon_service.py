@@ -1,4 +1,4 @@
-from flask import Response, jsonify, request
+from flask import  jsonify, request
 from models.Coupon import Coupon
 
 
@@ -8,6 +8,7 @@ def create_coupon_service():
     coupon = Coupon(code=coupon_code, discount_percentage=discount_res)
     coupon.save()
     return jsonify({'coupon': coupon.to_json()})
+
 
 def get_coupons_service():
     couponObj = Coupon.objects()

@@ -2,8 +2,9 @@ from db_connect import db_connect
 
 db = db_connect()
 
+
 class Review(db.Document):
-    name=db.StringField()
+    name = db.StringField()
     email = db.EmailField()
     review = db.StringField()
     rating = db.IntField()

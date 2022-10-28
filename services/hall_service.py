@@ -1,16 +1,17 @@
 from typing import Any
-from flask import Response, jsonify,request
+from flask import Response, jsonify, request
 from models.Hall import Hall
 
+
 def add_hall_service():
-    data:Any = request.get_json()
+    data: Any = request.get_json()
     hall = Hall(
-        category = data['category'],
-        price = data['price'],
-        max_guests = data['max_guests'],
-        desc = data['desc'],
-        amenities = data['amenities'],
-        images = data['images'],
+        category=data['category'],
+        price=data['price'],
+        max_guests=data['max_guests'],
+        desc=data['desc'],
+        amenities=data['amenities'],
+        images=data['images'],
     )
     hall.save()
     return Response(status=200, mimetype='application/json', response='{"message": "Added Successfully"}')

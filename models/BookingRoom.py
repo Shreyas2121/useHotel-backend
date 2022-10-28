@@ -1,13 +1,13 @@
 from db_connect import db_connect
-from models.Coupon import Coupon
 
 db = db_connect()
+
 
 class BookingRoom(db.Document):
     name = db.StringField(required=True)
     email = db.EmailField(required=True)
     date = db.DateTimeField(required=True)
-    check_in_date  = db.DateField(required=True)
+    check_in_date = db.DateField(required=True)
     check_out_date = db.DateField(required=True)
     category = db.StringField(required=True)
     price = db.DecimalField(required=True)
@@ -17,10 +17,9 @@ class BookingRoom(db.Document):
     total = db.DecimalField(required=True)
     special_request = db.StringField()
 
-
     def to_json(self):
         return {
-            "_id":str(self.pk),
+            "_id": str(self.pk),
             "name": self.name,
             "email": self.email,
             "date": self.date,
@@ -34,4 +33,3 @@ class BookingRoom(db.Document):
             "total": self.total,
             "special_request": self.special_request
         }
-

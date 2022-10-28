@@ -1,9 +1,6 @@
-from datetime import date
 from typing import Any
 from flask import Response, jsonify, request
-from datetime import datetime
 from dateutil import parser
-import requests
 from services.rooms_service import get_rooms_service
 
 from models.BookingRoom import BookingRoom
@@ -47,10 +44,12 @@ def get_room_availability_service():
     if parsed_check_in > parsed_check_out:
         return jsonify({"message": "Check in date should be before check out date"}), 400
 
-    booking_room_checkin = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__lte=parsed_check_in, check_out_date__gt=parsed_check_in,)))
-    booking_room_checkout = list(map(lambda x: x.to_json(),BookingRoom.objects(check_in_date__lt=parsed_check_out, check_out_date__gte=parsed_check_out,) ))
-    booking_room_between = list(map(lambda x: x.to_json(),BookingRoom.objects(check_in_date__gte=parsed_check_in, check_out_date__lte=parsed_check_out,)))
-
+    booking_room_checkin = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__lte=parsed_check_in,
+                                                                               check_out_date__gt=parsed_check_in, )))
+    booking_room_checkout = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__lt=parsed_check_out,
+                                                                                check_out_date__gte=parsed_check_out, )))
+    booking_room_between = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__gte=parsed_check_in,
+                                                                               check_out_date__lte=parsed_check_out, )))
 
     booking_room_checkout.extend(x for x in booking_room_checkin if x not in booking_room_checkout)
     booking_room_checkout.extend(x for x in booking_room_between if x not in booking_room_checkout)
@@ -60,13 +59,12 @@ def get_room_availability_service():
     for each in rooms[0].json.get('rooms'):
         available_rooms[each["category"]] = each["total_rooms"]
 
-
-    booked_room_type={}
+    booked_room_type = {}
     for i in booking_room_checkout:
-        for key,value in i.items():
+        for key, value in i.items():
             if key == 'category':
                 if value in booked_room_type:
-                    booked_room_type[value] = booked_room_type[value]+i['num_of_rooms']
+                    booked_room_type[value] = booked_room_type[value] + i['num_of_rooms']
                 else:
                     booked_room_type[value] = i['num_of_rooms']
 
@@ -76,14 +74,16 @@ def get_room_availability_service():
 
     return available_rooms
 
+
 def delete_booking_service(id):
     booking = BookingRoom.objects().get(pk=id)
     print('test')
     print(booking)
     booking.delete()
-    return jsonify({"message":"Room Booking Deleted"}),200
+    return jsonify({"message": "Room Booking Deleted"}), 200
+
 
 def get_bookings_by_email_service(email):
     bookings = BookingRoom.objects().filter(email=email)
     print(bookings)
-    return list(map(lambda x: x.to_json(), bookings)),200
+    return list(map(lambda x: x.to_json(), bookings)), 200

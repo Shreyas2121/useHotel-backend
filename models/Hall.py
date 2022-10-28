@@ -2,15 +2,15 @@ from db_connect import db_connect
 
 db = db_connect()
 
+
 class Hall(db.Document):
     category = db.StringField(required=True)
     price = db.DecimalField(required=True)
     max_guests = db.IntField(required=True)
     desc = db.StringField(required=True)
     amenities = db.ListField(db.StringField())
-    images = db.ListField(db.StringField(),required=True)
+    images = db.ListField(db.StringField(), required=True)
     total_halls = db.IntField(default=1)
-
 
     def to_json(self):
         return {
