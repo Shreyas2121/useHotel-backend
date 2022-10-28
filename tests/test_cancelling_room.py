@@ -18,7 +18,7 @@ def test_get_booking_email_fail():
 def test_cancel_booking_pass():
     response = application.test_client().get('/booking/get/test@gmail.com')
     res = json.loads(response.data.decode('utf-8'))[0].get('_id')
-    response_id = app.test_client().delete('/booking/'+str(res))
+    response_id = application.test_client().delete('/booking/'+str(res))
     res_id = json.loads(response_id.data.decode('utf-8')).get('_id')
     assert res_id == res
     assert response_id.status_code == 200

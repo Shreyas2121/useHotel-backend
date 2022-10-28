@@ -1,4 +1,4 @@
-from flask import Response
+from flask import Response, jsonify
 from models.BookingRoom import BookingRoom
 
 def delete_booking_service(id):
@@ -6,10 +6,9 @@ def delete_booking_service(id):
     print('test')
     print(booking)
     booking.delete()
-    return Response("Hall Booking Deleted", status=200, mimetype='application/json')
+    return jsonify({"message":"Room Booking Deleted"}),200
 
 def get_bookings_by_email_service(email):
-
     bookings = BookingRoom.objects().filter(email=email)
     print(bookings)
-    return Response(list(map(lambda x: x.to_json(), bookings)), status=200, mimetype='application/json')
+    return list(map(lambda x: x.to_json(), bookings)),200
