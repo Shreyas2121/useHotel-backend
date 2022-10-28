@@ -17,7 +17,7 @@ def add_reviews_service():
         rating = data['rating'],
     ).save()
 
-    return Response(status=200, mimetype='application/json', response='{"message":"Review Added"}')
+    return jsonify({'message': 'Review added successfully'}), 200
 
 def get_top_reviews_service():
     review_data = Review.objects(rating=5)  # type: ignore
