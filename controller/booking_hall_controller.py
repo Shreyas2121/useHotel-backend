@@ -8,7 +8,7 @@ def book_hall_controller():
     return booking_hall_service.book_hall_service()
 
 def get_halls_availability_controller():
-    return booking_hall_service.check_hall_availability_service()
+    return booking_hall_service.get_hall_availability_service()
 
 def delete_hall_booking_controller(_id):
     return cancelling_hall_service.delete_booking_service(_id)

@@ -1,14 +1,14 @@
-from db_connect import connection_db
+from db_connect import db_connect
 
-db = connection_db()
+db = db_connect()
 
 class Hall(db.Document):
-    category = db.StringField(requird=True)
-    price = db.DecimalField(requird=True)
-    max_guests = db.IntField(requird=True)
-    desc = db.StringField(requird=True)
+    category = db.StringField(required=True)
+    price = db.DecimalField(required=True)
+    max_guests = db.IntField(required=True)
+    desc = db.StringField(required=True)
     amenities = db.ListField(db.StringField())
-    images = db.ListField(db.StringField(),requird=True)
+    images = db.ListField(db.StringField(),required=True)
     total_halls = db.IntField(default=1)
 
 
