@@ -26,6 +26,6 @@ def delete_hall_booking(_id):
 
 
 @booking_hall_route.route('/booking/hall/<string:email>', methods=['GET'])
-def get_hall_bookings(email):
+def get_hall_bookings_by_email(email):
     print(email)
     return get_bookings_by_email_controller(email)

@@ -26,6 +26,6 @@ def delete_room_booking(_id):
 
 
 @booking_route.route('/booking/room/<string:email>', methods=['GET'])
-def get_room_bookings(email):
+def get_room_bookings_by_email(email):
     print(email)
     return get_bookings_by_email_controller(email)

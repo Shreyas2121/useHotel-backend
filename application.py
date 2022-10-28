@@ -18,8 +18,6 @@ application.register_blueprint(addons_route, url_prefix='/api')
 application.register_blueprint(booking_route, url_prefix='/api')
 application.register_blueprint(booking_hall_route, url_prefix='/api')
 application.register_blueprint(reviews_route, url_prefix='/api')
-application.register_blueprint(cancel_room_route, url_prefix='/api')
-application.register_blueprint(cancel_hall_route, url_prefix='/api')
 
 if __name__ == '__main__':
     application.run(debug=True)
