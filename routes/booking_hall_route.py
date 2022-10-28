@@ -1,7 +1,6 @@
 from flask import Blueprint, request
 
-from controller.booking_hall_controller import get_hall_bookings_controller, book_hall_controller, \
-    get_halls_availability_controller, delete_hall_booking_controller, get_bookings_by_email_controller
+from controller.booking_hall_controller import get_hall_bookings_controller, book_hall_controller, get_halls_availability_controller, delete_hall_booking_controller, get_bookings_by_email_controller
 
 booking_hall_route = Blueprint('booking_hall_route', __name__)
 
