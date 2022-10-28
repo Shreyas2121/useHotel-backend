@@ -1,11 +1,11 @@
 from typing import Any
-from flask import jsonify, request, Response
+from flask import jsonify, request
 from models.Review import Review
 
 
 def get_reviews_service():
     review_data = Review.objects()  # type: ignore
-    return jsonify({'Review': review.to_json() for review in review_data }),200
+    return jsonify({'Review': [review.to_json() for review in review_data]}),200
 
 
 def add_reviews_service():
