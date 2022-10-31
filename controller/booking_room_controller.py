@@ -5,11 +5,11 @@ def book_room_controller():
     return booking_room_service.book_room_service()
 
 
-def get_booking_rooms_controller():
-    return booking_room_service.get_bookings_service()
+def get_room_bookings_controller():
+    return booking_room_service.get_room_bookings_service()
 
 
-def get_booking_room_controller():
+def get_room_availability_controller():
     return booking_room_service.get_room_availability_service()
 
 

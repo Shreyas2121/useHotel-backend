@@ -9,7 +9,7 @@ def book_hall_controller():
     return booking_hall_service.book_hall_service()
 
 
-def get_halls_availability_controller():
+def get_hall_availability_controller():
     return booking_hall_service.get_hall_availability_service()
 
 

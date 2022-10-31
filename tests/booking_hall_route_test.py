@@ -1,7 +1,7 @@
 from datetime import datetime
 import json
 import pytest
-from application import  *
+from application import application
 
 def test_book_hall():
     data_to_post = {
@@ -19,12 +19,12 @@ def test_book_hall():
         "specialReq": "None",
         "total": 900
     }
-    res = .test_client().post('/booking/hall', json=data_to_post)
+    res = application.test_client().post('/booking/hall', json=data_to_post)
 
     assert json.loads(res.data)['message'] == "Booking Successful"
 
 def test_check_booking():
-    res = .test_client().post('/booking/hall/check',json={
+    res = application.test_client().post('/booking/hall/check',json={
         "checkIn": str(datetime.now()),
         "checkOut": str(datetime.now())
     })
