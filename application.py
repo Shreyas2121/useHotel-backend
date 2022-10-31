@@ -1,3 +1,4 @@
+from os import environ
 from flask import Flask
 from flask_cors import CORS
 from routes.halls_route import halls_bp
@@ -9,6 +10,7 @@ from routes.booking_hall_route import hall_booking_bp
 from routes.reviews_route import reviews_bp
 
 application = Flask(__name__)
+
 CORS(application)
 
 application.register_blueprint(rooms_bp, url_prefix='/api')
