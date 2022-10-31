@@ -16,8 +16,8 @@ def book_room_service():
             date=data['date'],
             check_in_date=data['checkin'],
             check_out_date=data['checkout'],
-            category=data['roomType'],
-            price=data['roomPrice'],
+            category=data['category'],
+            price=data['basePrice'],
             num_of_rooms=data['no'],
             add_ons=data['selectedAddons'],
             coupon=data['coupon'],
@@ -31,7 +31,7 @@ def book_room_service():
     return jsonify({"message": "Booking Successful"})
 
 
-def get_bookings_service():
+def get_room_bookings_service():
     bookings = BookingRoom.objects()
     return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
 
@@ -51,8 +51,10 @@ def get_room_availability_service():
     booking_room_between = list(map(lambda x: x.to_json(), BookingRoom.objects(check_in_date__gte=parsed_check_in,
                                                                                check_out_date__lte=parsed_check_out, )))
 
-    booking_room_checkout.extend(x for x in booking_room_checkin if x not in booking_room_checkout)
-    booking_room_checkout.extend(x for x in booking_room_between if x not in booking_room_checkout)
+    booking_room_checkout.extend(
+        x for x in booking_room_checkin if x not in booking_room_checkout)
+    booking_room_checkout.extend(
+        x for x in booking_room_between if x not in booking_room_checkout)
 
     rooms = get_rooms_service()
     available_rooms = {}
@@ -64,7 +66,8 @@ def get_room_availability_service():
         for key, value in i.items():
             if key == 'category':
                 if value in booked_room_type:
-                    booked_room_type[value] = booked_room_type[value] + i['num_of_rooms']
+                    booked_room_type[value] = booked_room_type[value] + \
+                        i['num_of_rooms']
                 else:
                     booked_room_type[value] = i['num_of_rooms']
 

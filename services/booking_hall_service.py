@@ -20,8 +20,8 @@ def book_hall_service():
             date=data['date'],
             check_in_date=data['checkin'],
             check_out_date=data['checkout'],
-            category=data['roomType'],
-            price=data['roomPrice'],
+            category=data['category'],
+            price=data['basePrice'],
             add_ons=data['selectedAddons'],
             coupon=data['coupon'],
             special_request=data['specialReq'],
@@ -78,10 +78,10 @@ def get_hall_availability_service():
 def delete_booking_service(id):
     booking = BookingHall.objects().get(pk=id)
     booking.delete()
-    return Response("Hall Booking Deleted", status=200, mimetype='application/json')
+    return jsonify({"message": "Booking Deleted"}), 200
 
 
 def get_bookings_by_email_service(email):
     bookings = BookingHall.objects().filter(email=email)
     print(bookings)
-    return Response(list(map(lambda x: x.to_json(), bookings)), status=200, mimetype='application/json')
+    return list(map(lambda x: x.to_json(), bookings)), 200
