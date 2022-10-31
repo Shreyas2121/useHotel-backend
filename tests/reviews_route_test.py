@@ -1,12 +1,14 @@
+from email.mime import application
+from http.client import OK
 import json
 import pytest
+import sys
 from application import application
-
+print(sys.path)
 
 def test_get_reviews():
     res = application.test_client().get('/api/reviews')
-    assert res.status_code == 200
-
+    assert res.status_code== 200
 
 def test_add_reviews():
     data_to_post = {
@@ -16,13 +18,10 @@ def test_add_reviews():
         "rating": 5
     }
     res = application.test_client().post('/api/reviews', json=data_to_post)
-    print(res.data)
     assert res.status_code == 200
-    assert json.loads(res.data) == {"message": "Review Added"}
-    assert res.mimetype == 'application/json'
-    # assert json.loads(res.data)['message'] == "Review Added"
+    assert json.loads(res.data) == {"message": "Review added successfully"}
 
 
 def test_get_top_reviews():
-    res = application.test_client().get('/reviews/featured')
+    res = application.test_client().get('api/reviews/featured')
     assert res.status_code == 200
