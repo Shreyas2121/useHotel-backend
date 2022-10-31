@@ -31,7 +31,7 @@ def book_room_service():
     return jsonify({"message": "Booking Successful"})
 
 
-def get_bookings_service():
+def get_room_bookings_service():
     bookings = BookingRoom.objects()
     return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
 
