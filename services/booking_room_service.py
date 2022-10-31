@@ -26,14 +26,16 @@ def book_room_service():
         )
         obj.save()
     except Exception as e:
-        return jsonify({'message': 'Error Occured'}), 400
+        return jsonify({'message': str(e)}), 400
 
     return jsonify({"message": "Booking Successful"})
 
 
 def get_room_bookings_service():
     bookings = BookingRoom.objects()
-    return Response(status=200, mimetype='application/json', response=list(map(lambda x: x.to_json(), bookings)))
+    print('here')
+    print(bookings)
+    return list(map(lambda x: x.to_json(), bookings))
 
 
 def get_room_availability_service():
