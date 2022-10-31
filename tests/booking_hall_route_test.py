@@ -10,13 +10,12 @@ def test_book_hall():
         "date": datetime.now(),
         "checkin": datetime.now(),
         "checkout": datetime.now(),
-        "roomType": "Deluxe",
-        "roomPrice": 1000,
-        "no": 1,
-        "selectedAddons": {"Breakfast": 100, "Dinner": 200},
-        "couponId": "WELCOME10",
-        "discount": "10",
-        "specialReq": "None",
+        "category": "Deluxe",
+        "price": 1000,
+        "num_of_rooms": 1,
+        "add_ons": {"Breakfast": 100, "Dinner": 200},
+        "coupon": "WELCOME10",
+        "special_request": "None",
         "total": 900
     }
     res = app.test_client().post('/booking/hall', json=data_to_post)
