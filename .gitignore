@@ -1,0 +1,7 @@
+__pycache__
+.idea
+.vscode
+*.iml
+.pytest_cache
+menv
+.env
